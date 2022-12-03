@@ -11,7 +11,7 @@ class FreenalyticsClient {
     this.domain = options.domain;
 
     this.rest = axios.create({
-      baseUrl: options.apiUrl
+      baseURL: this.apiUrl
     });
   }
 
@@ -32,7 +32,7 @@ class FreenalyticsClient {
     return this.postPayload({
       command_name: command.name,
       command_author: author,
-      command_errored: false
+      command_success: true
     });
   }
 
@@ -44,7 +44,7 @@ class FreenalyticsClient {
     return this.postPayload({
       command_name: command.name,
       command_author: author,
-      command_errored: true,
+      command_success: false,
       command_error_message: error?.message ?? 'An unknown error occurred.'
     });
   }
