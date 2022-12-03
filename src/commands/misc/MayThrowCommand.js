@@ -5,7 +5,7 @@ class MayThrowCommand extends SlashCommand {
   constructor(client) {
     super(client, {
       name: 'may_throw',
-      description: '50% the command may throw an error.',
+      description: '80% the command may throw an error.',
       group: 'misc',
       guildOnly: true,
       dataBuilder: new SlashCommandBuilder()
@@ -13,7 +13,7 @@ class MayThrowCommand extends SlashCommand {
   }
 
   run(interaction) {
-    if (Math.random() < 0.5) {
+    if (Math.random() < 0.8) {
       throw new Error('Random error happened. Oops!');
     }
 
