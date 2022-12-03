@@ -30,6 +30,14 @@ client.registerDefaultEvents()
 client.registry
   .registerGroups([
     ['misc', 'Miscellaneous Commands']
-  ]);
+  ])
+  .registerCommandsIn(path.join(__dirname, './commands'));
+
+client.on('ready', async () => {
+  if (config.get('TESTING_GUILD_ID')) {
+    client.deployer.rest.setToken(config.get('TOKEN'));
+    await client.deployer.deployToTestingGuild();
+  }
+});
 
 client.login(config.get('TOKEN'));
