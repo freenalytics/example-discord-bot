@@ -8,8 +8,7 @@
     "debug": "node ./src/index.js --debug",
     "dev": "nodemon --exec npm start",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "deploy": "node ./src/command-deployer.js"
+    "lint:fix": "eslint src --fix"
   },
   "repository": {
     "type": "git",
