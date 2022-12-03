@@ -1,5 +1,6 @@
 const path = require('path');
 const { ConfigProvider, ExtendedClient } = require('@greencoast/discord.js-extended');
+const FreenalyticsClient = require('./third-party/freenalytics/FreenalyticsClient');
 
 const config = new ConfigProvider({
   configPath: path.join(__dirname, '../config.json'),
@@ -39,5 +40,14 @@ client.on('ready', async () => {
     await client.deployer.deployToTestingGuild();
   }
 });
+
+// Create Freenalytics client if there's both the API_URL and the DOMAIN specified.
+if (config.get('FREENALYTICS_API_URL') && config.get('FREENALYTICS_DOMAIN')) {
+  client.analytics = new FreenalyticsClient(client, {
+    apiUrl: config.get('FREENALYTICS_API_URL'),
+    domain: config.get('FREENALYTICS_DOMAIN')
+  });
+  client.analytics.initialize();
+}
 
 client.login(config.get('TOKEN'));
