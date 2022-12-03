@@ -2,6 +2,8 @@ const axios = require('axios');
 const logger = require('@greencoast/logger');
 const { Message } = require('discord.js');
 
+const DEFAULT_INTERVAL = 10000;
+
 class FreenalyticsClient {
   constructor(client, options) {
     FreenalyticsClient.validateOptions(options);
@@ -9,6 +11,7 @@ class FreenalyticsClient {
     this.client = client;
     this.apiUrl = options.apiUrl;
     this.domain = options.domain;
+    this.interval = Math.floor(options.interval ?? DEFAULT_INTERVAL);
 
     this.rest = axios.create({
       baseURL: this.apiUrl
@@ -17,6 +20,7 @@ class FreenalyticsClient {
 
   initialize() {
     this.registerEvents();
+    setInterval(this.postIntervalHandler.bind(this), this.interval);
   }
 
   registerEvents() {
@@ -49,6 +53,16 @@ class FreenalyticsClient {
     });
   }
 
+  postIntervalHandler() {
+    const guildCount = this.client.guilds.cache.size;
+    const memberCount = this.client.guilds.cache.reduce((sum, guild) => sum + guild.memberCount, 0);
+
+    return this.postPayload({
+      server_count: guildCount,
+      member_count: memberCount
+    });
+  }
+
   async postPayload(payload) {
     try {
       await this.rest.post(`/applications/${this.domain}/data`, payload);
@@ -65,6 +79,12 @@ class FreenalyticsClient {
     
     if (!options.domain) {
       throw new Error('options.domain is required.');
+    }
+
+    if (options.interval) {
+      if (isNaN(options.interval) || options.interval < 1) {
+        throw new Error('options.interval should be a positive number.');
+      }
     }
   }
 }
