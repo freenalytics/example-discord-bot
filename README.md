@@ -61,5 +61,5 @@ You can run the following slash commands inside the server that you've defined w
 
 Finally, you can check your application's dashboard on your Freenalytics instance where you'll find all the data uploaded by the bot.
 
-![dashboard-screenshot-1](https://github.com/freenalytics/example-discord-bot/tree/master/assets/dashboard_screenshot_1.png)
-![dashboard-screenshot-2](https://github.com/freenalytics/example-discord-bot/tree/master/assets/dashboard_screenshot_2.png)
+![dashboard-screenshot-1](https://raw.githubusercontent.com/freenalytics/example-discord-bot/master/assets/dashboard_screenshot_1.png)
+![dashboard-screenshot-2](https://raw.githubusercontent.com/freenalytics/example-discord-bot/master/assets/dashboard_screenshot_2.png)
